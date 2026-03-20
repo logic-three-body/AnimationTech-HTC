@@ -34,6 +34,12 @@ Read the latest summary:
 Get-Content .\.reports\summary.json -Raw
 ```
 
+Case env mapping and startup reference:
+
+```text
+docs/cases/README.md
+```
+
 ## Execution Model
 
 - Every case gets its own local Conda prefix environment.
@@ -62,3 +68,5 @@ Get-Content .\.reports\summary.json -Raw
 ## Manual Smoke
 
 All viewer-heavy notebooks now pass automated execution. A manual JupyterLab smoke pass is still recommended for interactive `ipyanimlab` notebooks if visual validation is required.
+
+For day-to-day interactive preview and visual debugging, use the browser JupyterLab entrypoint instead of the VSCode notebook renderer. This repository's `ipyanimlab` and `ipywebgl` cases are validated against browser JupyterLab.
