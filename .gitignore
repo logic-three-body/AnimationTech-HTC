@@ -150,4 +150,19 @@ $RECYCLE.BIN/
 resources/*
 !resources/resources.md
 
+# Local automation state
+.envs/
+.jupyter/
+.reports/
+.cache/
+resources/lafan1/
+**/.animationtech_prepared_*.ipynb
+labs/AnimationPapers/animated_face.dat
+labs/AnimationPapers/motion_fields_precomputed_all_states_tables*.dat
+labs/AnimationPapers/realtime_planning_animations_costs*.dat
+labs/AnimationPapers/realtime_planning_orientation_value_functions*.dat
+labs/AnimationPapers/realtime_planning_reach_position_value_functions*.dat
+labs/AnimationPapers/realtime_planning_animations_group_costs*.dat
+labs/AnimationPapers/realtime_planning_reach_position_group_value_functions*.dat
+
 

@@ -1,0 +1,2 @@
+# External Maya-only case placeholder.
+# This template is never installed because maya-external cases short-circuit.

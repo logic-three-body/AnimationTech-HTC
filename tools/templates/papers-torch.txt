@@ -1,0 +1,16 @@
+numpy
+scipy
+scikit-learn
+matplotlib
+ipympl
+ipywidgets
+ipycanvas
+jupyterlab
+nbconvert
+nbclient
+ipykernel
+ipyanimlab==1.2.1
+ipywebgl
+usd-core
+torch
+umap-learn

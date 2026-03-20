@@ -1,0 +1,9 @@
+numpy
+ipywidgets
+jupyterlab
+nbconvert
+nbclient
+ipykernel
+ipyanimlab==1.2.1
+ipywebgl
+usd-core

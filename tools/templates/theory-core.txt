@@ -1,0 +1,10 @@
+numpy
+scipy
+sympy
+matplotlib
+ipympl
+ipywidgets
+jupyterlab
+nbconvert
+nbclient
+ipykernel

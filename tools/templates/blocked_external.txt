@@ -1,0 +1,2 @@
+# External case placeholder.
+# This template is never installed because blocked_external cases short-circuit.

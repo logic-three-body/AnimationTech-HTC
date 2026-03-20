@@ -1,0 +1,567 @@
+﻿{
+    "cases":  [
+                  {
+                      "slug":  "curve_and_spline",
+                      "entry":  "labs/Theory/curve_and_spline.ipynb",
+                      "kind":  "notebook",
+                      "template":  "theory-core",
+                      "env_prefix":  ".envs/curve_and_spline",
+                      "kernel_name":  "animationtech-curve_and_spline",
+                      "public_assets":  [
+
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "automated",
+                      "status_policy":  {
+                                            "policy":  "automated",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed.",
+                                            "last_run_utc":  "2026-03-18T17:31:09.0746243Z"
+                                        }
+                  },
+                  {
+                      "slug":  "laplacian_deformation",
+                      "entry":  "labs/Theory/laplacian_deformation.ipynb",
+                      "kind":  "notebook",
+                      "template":  "theory-anim",
+                      "env_prefix":  ".envs/laplacian_deformation",
+                      "kernel_name":  "animationtech-laplacian_deformation",
+                      "public_assets":  [
+                                            "lafan1",
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T03:53:05.2117129Z"
+                                        }
+                  },
+                  {
+                      "slug":  "motiongraph_pointcloud_derivation",
+                      "entry":  "labs/Theory/motiongraph_pointcloud_derivation.ipynb",
+                      "kind":  "notebook",
+                      "template":  "theory-core",
+                      "env_prefix":  ".envs/motiongraph_pointcloud_derivation",
+                      "kernel_name":  "animationtech-motiongraph_pointcloud_derivation",
+                      "public_assets":  [
+
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "automated",
+                      "status_policy":  {
+                                            "policy":  "automated",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed.",
+                                            "last_run_utc":  "2026-03-18T17:11:29.3561570Z"
+                                        }
+                  },
+                  {
+                      "slug":  "radial_basis_function",
+                      "entry":  "labs/Theory/radial_basis_function.ipynb",
+                      "kind":  "notebook",
+                      "template":  "theory-core",
+                      "env_prefix":  ".envs/radial_basis_function",
+                      "kernel_name":  "animationtech-radial_basis_function",
+                      "public_assets":  [
+
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "automated",
+                      "status_policy":  {
+                                            "policy":  "automated",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed.",
+                                            "last_run_utc":  "2026-03-18T17:33:08.3389682Z"
+                                        }
+                  },
+                  {
+                      "slug":  "radial_basis_function_verbs_and_adverbs",
+                      "entry":  "labs/Theory/radial_basis_function_verbs_and_adverbs.ipynb",
+                      "kind":  "notebook",
+                      "template":  "theory-core",
+                      "env_prefix":  ".envs/rbf_verbs_adv",
+                      "kernel_name":  "animationtech-radial_basis_function_verbs_and_adverbs",
+                      "public_assets":  [
+
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "automated",
+                      "status_policy":  {
+                                            "policy":  "automated",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed.",
+                                            "last_run_utc":  "2026-03-18T17:35:08.3952016Z"
+                                        }
+                  },
+                  {
+                      "slug":  "animation",
+                      "entry":  "labs/ipyanimlab/animation.ipynb",
+                      "kind":  "notebook",
+                      "template":  "ipyanimlab",
+                      "env_prefix":  ".envs/animation",
+                      "kernel_name":  "animationtech-animation",
+                      "public_assets":  [
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/ipyanimlab/push1_subject2.bvh"
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-18T17:41:54.8419027Z"
+                                        }
+                  },
+                  {
+                      "slug":  "character_usd",
+                      "entry":  "labs/ipyanimlab/character_usd.ipynb",
+                      "kind":  "notebook",
+                      "template":  "ipyanimlab",
+                      "env_prefix":  ".envs/character_usd",
+                      "kernel_name":  "animationtech-character_usd",
+                      "public_assets":  [
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/ipyanimlab/example_animation.usd"
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-18T17:22:09.3242461Z"
+                                        }
+                  },
+                  {
+                      "slug":  "edit_material",
+                      "entry":  "labs/ipyanimlab/edit_material.ipynb",
+                      "kind":  "notebook",
+                      "template":  "ipyanimlab",
+                      "env_prefix":  ".envs/edit_material",
+                      "kernel_name":  "animationtech-edit_material",
+                      "public_assets":  [
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-18T17:36:43.5631682Z"
+                                        }
+                  },
+                  {
+                      "slug":  "multiple_characters",
+                      "entry":  "labs/ipyanimlab/multiple_characters.ipynb",
+                      "kind":  "notebook",
+                      "template":  "ipyanimlab",
+                      "env_prefix":  ".envs/multiple_characters",
+                      "kernel_name":  "animationtech-multiple_characters",
+                      "public_assets":  [
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/ipyanimlab/push1_subject2.bvh"
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-18T17:43:31.2690521Z"
+                                        }
+                  },
+                  {
+                      "slug":  "rigid_usd",
+                      "entry":  "labs/ipyanimlab/rigid_usd.ipynb",
+                      "kind":  "notebook",
+                      "template":  "ipyanimlab",
+                      "env_prefix":  ".envs/rigid_usd",
+                      "kernel_name":  "animationtech-rigid_usd",
+                      "public_assets":  [
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-18T17:38:18.8603679Z"
+                                        }
+                  },
+                  {
+                      "slug":  "simple_sphere",
+                      "entry":  "labs/ipyanimlab/simple_sphere.ipynb",
+                      "kind":  "notebook",
+                      "template":  "ipyanimlab",
+                      "env_prefix":  ".envs/simple_sphere",
+                      "kernel_name":  "animationtech-simple_sphere",
+                      "public_assets":  [
+
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-18T19:45:21.1575268Z"
+                                        }
+                  },
+                  {
+                      "slug":  "time_of_day",
+                      "entry":  "labs/ipyanimlab/time_of_day.ipynb",
+                      "kind":  "notebook",
+                      "template":  "ipyanimlab",
+                      "env_prefix":  ".envs/time_of_day",
+                      "kernel_name":  "animationtech-time_of_day",
+                      "public_assets":  [
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-18T17:39:57.2627106Z"
+                                        }
+                  },
+                  {
+                      "slug":  "animation_format",
+                      "entry":  "labs/AnimationPapers/Animation Format.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-core",
+                      "env_prefix":  ".envs/animation_format",
+                      "kernel_name":  "animationtech-animation_format",
+                      "public_assets":  [
+                                            "lafan1",
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T04:36:04.9163523Z"
+                                        }
+                  },
+                  {
+                      "slug":  "footskate_cleanup_for_motion_capture_editing",
+                      "entry":  "labs/AnimationPapers/Footskate Cleanup for Motion Capture Editing.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-core",
+                      "env_prefix":  ".envs/footskate_cleanup",
+                      "kernel_name":  "animationtech-footskate_cleanup_for_motion_capture_editing",
+                      "public_assets":  [
+                                            "lafan1",
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T05:14:01.4469575Z"
+                                        }
+                  },
+                  {
+                      "slug":  "halo_4_facial_animation",
+                      "entry":  "labs/AnimationPapers/Halo 4 Facial Animation.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-core",
+                      "env_prefix":  ".envs/halo_4_facial_animation",
+                      "kernel_name":  "animationtech-halo_4_facial_animation",
+                      "public_assets":  [
+                                            "ipyanimlab_package_assets",
+                                            "halo_animated_face"
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/AnimationPapers/animated_face.dat"
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T12:41:49.8941636Z"
+                                        }
+                  },
+                  {
+                      "slug":  "knowing_when_to_put_your_foot_down",
+                      "entry":  "labs/AnimationPapers/Knowing When To Put Your Foot Down.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-core",
+                      "env_prefix":  ".envs/foot_down",
+                      "kernel_name":  "animationtech-knowing_when_to_put_your_foot_down",
+                      "public_assets":  [
+                                            "lafan1",
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/AnimationPapers/foot_feature_vector.dat"
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T09:31:42.6809705Z"
+                                        }
+                  },
+                  {
+                      "slug":  "motion_fields_for_interactive_character_animation",
+                      "entry":  "labs/AnimationPapers/Motion Fields For Interactive Character Animation.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-torch",
+                      "env_prefix":  ".envs/motion_fields",
+                      "kernel_name":  "animationtech-motion_fields_for_interactive_character_animation",
+                      "public_assets":  [
+                                            "lafan1",
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/AnimationPapers/motion_fields_precomputed_all_states_tables.dat"
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T13:45:45.4004595Z"
+                                        }
+                  },
+                  {
+                      "slug":  "motion_graph",
+                      "entry":  "labs/AnimationPapers/Motion Graph.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-warp",
+                      "env_prefix":  ".envs/motion_graph",
+                      "kernel_name":  "animationtech-motion_graph",
+                      "public_assets":  [
+                                            "lafan1",
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/AnimationPapers/motion_graph_walking_rawdata.dat"
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T11:07:46.2424646Z"
+                                        }
+                  },
+                  {
+                      "slug":  "motion_matching",
+                      "entry":  "labs/AnimationPapers/Motion Matching.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-core",
+                      "env_prefix":  ".envs/motion_matching",
+                      "kernel_name":  "animationtech-motion_matching",
+                      "public_assets":  [
+                                            "lafan1",
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T10:07:34.3575141Z"
+                                        }
+                  },
+                  {
+                      "slug":  "motion_warping",
+                      "entry":  "labs/AnimationPapers/Motion Warping.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-core",
+                      "env_prefix":  ".envs/motion_warping",
+                      "kernel_name":  "animationtech-motion_warping",
+                      "public_assets":  [
+                                            "lafan1",
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T05:47:09.3780368Z"
+                                        }
+                  },
+                  {
+                      "slug":  "near_optimal_character_animation_with_continuous_control",
+                      "entry":  "labs/AnimationPapers/Near-optimal Character Animation with Continuous Control.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-planning",
+                      "env_prefix":  ".envs/near_opt_ctrl",
+                      "kernel_name":  "animationtech-near_optimal_character_animation_with_continuous_control",
+                      "public_assets":  [
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/AnimationPapers/near_optimal_character_animations.dat",
+                                                  "labs/AnimationPapers/near_optimal_character_animation_transitions.dat"
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-18T17:29:02.1355383Z"
+                                        }
+                  },
+                  {
+                      "slug":  "precomputing_avatar_behavior",
+                      "entry":  "labs/AnimationPapers/Precomputing Avatar Behavior.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-warp",
+                      "env_prefix":  ".envs/avatar_behavior",
+                      "kernel_name":  "animationtech-precomputing_avatar_behavior",
+                      "public_assets":  [
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/AnimationPapers/motion_graph_walking_rawdata.dat"
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-18T17:47:02.9938980Z"
+                                        }
+                  },
+                  {
+                      "slug":  "real_time_planning_for_parameterized_human_motion",
+                      "entry":  "labs/AnimationPapers/Real-Time Planning for Parameterized Human Motion.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-planning",
+                      "env_prefix":  ".envs/rt_param_human",
+                      "kernel_name":  "animationtech-real_time_planning_for_parameterized_human_motion",
+                      "public_assets":  [
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/AnimationPapers/realtime_planning_animations_data.bin",
+                                                  "labs/AnimationPapers/realtime_planning_animations_costs.dat",
+                                                  "labs/AnimationPapers/realtime_planning_orientation_value_functions.dat",
+                                                  "labs/AnimationPapers/realtime_planning_reach_position_value_functions.dat",
+                                                  "labs/AnimationPapers/realtime_planning_animations_group_costs.dat",
+                                                  "labs/AnimationPapers/realtime_planning_reach_position_group_value_functions.dat"
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T14:56:10.3337556Z"
+                                        }
+                  },
+                  {
+                      "slug":  "verbs_and_adverbs",
+                      "entry":  "labs/AnimationPapers/Verbs and Adverbs.ipynb",
+                      "kind":  "notebook",
+                      "template":  "papers-core",
+                      "env_prefix":  ".envs/verbs_and_adverbs",
+                      "kernel_name":  "animationtech-verbs_and_adverbs",
+                      "public_assets":  [
+                                            "lafan1",
+                                            "ipyanimlab_package_assets"
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "manual_smoke",
+                      "status_policy":  {
+                                            "policy":  "manual_smoke",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed. Manual JupyterLab smoke test is still required.",
+                                            "last_run_utc":  "2026-03-19T12:45:34.3103526Z"
+                                        }
+                  },
+                  {
+                      "slug":  "real_time_planning_multiprocess_func",
+                      "entry":  "labs/AnimationPapers/RealTimePlanning_MultiProcess_Func.py",
+                      "kind":  "python_module",
+                      "template":  "papers-planning",
+                      "env_prefix":  ".envs/rtp_mp",
+                      "kernel_name":  "animationtech-real_time_planning_multiprocess_func",
+                      "public_assets":  [
+
+                                        ],
+                      "generated_artifacts":  [
+
+                                              ],
+                      "validation_mode":  "automated",
+                      "status_policy":  {
+                                            "policy":  "automated",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed.",
+                                            "last_run_utc":  "2026-03-18T17:16:31.3412989Z"
+                                        }
+                  },
+                  {
+                      "slug":  "halo_4_exporter_from_maya",
+                      "entry":  "labs/AnimationPapers/Halo 4 exporter from maya.py",
+                      "kind":  "python_module",
+                      "template":  "python-stdlib",
+                      "env_prefix":  ".envs/halo_4_exporter_from_maya",
+                      "kernel_name":  "animationtech-halo_4_exporter_from_maya",
+                      "public_assets":  [
+
+                                        ],
+                      "generated_artifacts":  [
+                                                  "labs/AnimationPapers/animated_face.dat"
+                                              ],
+                      "validation_mode":  "automated",
+                      "status_policy":  {
+                                            "policy":  "automated",
+                                            "current_status":  "passed",
+                                            "last_note":  "Automated execution passed.",
+                                            "last_run_utc":  "2026-03-19T12:43:53.2729237Z"
+                                        }
+                  }
+              ]
+}
+
