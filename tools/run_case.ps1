@@ -9,7 +9,7 @@ param(
     [Nullable[int]]$GpuIndex
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $manifestPath = Join-Path $PSScriptRoot "cases.yaml"
