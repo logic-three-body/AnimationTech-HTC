@@ -11,6 +11,8 @@ This document records the environment mapping and the startup flow for every cas
 
 ## Common Startup Flow
 
+> **Note:** Before setting up a new environment, always check if the target Conda prefix environment already exists locally to avoid unnecessary reinstallations.
+
 ### 1. Prepare public assets
 
 Run this once before the dataset-driven notebooks:

@@ -42,6 +42,7 @@ docs/cases/README.md
 
 ## Execution Model
 
+- Before re-creating or reinstalling an environment, always check if the target environment already exists locally to avoid unnecessary reinstallations.
 - Every case gets its own local Conda prefix environment.
 - Notebook execution always runs from the notebook directory so relative paths resolve correctly.
 - Source notebooks are never edited in place for automation. Execution-only changes are applied to prepared copies.
@@ -70,3 +71,9 @@ docs/cases/README.md
 All viewer-heavy notebooks now pass automated execution. A manual JupyterLab smoke pass is still recommended for interactive `ipyanimlab` notebooks if visual validation is required.
 
 For day-to-day interactive preview and visual debugging, use the browser JupyterLab entrypoint instead of the VSCode notebook renderer. This repository's `ipyanimlab` and `ipywebgl` cases are validated against browser JupyterLab.
+
+To launch JupyterLab for a specific case environment, use the local python executable (do not rely on a globally installed `jupyter`):
+
+```powershell
+.\.envs\<slug>\python.exe -m jupyter lab
+```
