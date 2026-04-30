@@ -1,11 +1,37 @@
 import argparse
 import json
+import re
 from pathlib import Path
 
 
 MOTION_FIELDS_SLUG = "motion_fields_for_interactive_character_animation"
 REALTIME_PLANNING_SLUG = "real_time_planning_for_parameterized_human_motion"
 KNOWING_FOOT_DOWN_SLUG = "knowing_when_to_put_your_foot_down"
+NEAR_OPTIMAL_SLUG = "near_optimal_character_animation_with_continuous_control"
+
+
+GAMEPAD_HELPER_SOURCE = """def animationtech_gamepad_axis(gamepad, index, default=0.0):
+    try:
+        axes = getattr(gamepad, "axes", ())
+        if axes is None or len(axes) <= index:
+            return default
+        return axes[index].value
+    except Exception:
+        return default
+
+
+def animationtech_gamepad_button(gamepad, index, default=0.0):
+    try:
+        buttons = getattr(gamepad, "buttons", ())
+        if buttons is None or len(buttons) <= index:
+            return default
+        return buttons[index].value
+    except Exception:
+        return default
+"""
+
+GAMEPAD_AXIS_PATTERN = re.compile(r"gamepad\.axes\s*\[\s*(\d+)\s*\]\.value")
+GAMEPAD_BUTTON_PATTERN = re.compile(r"gamepad\.buttons\s*\[\s*(\d+)\s*\]\.value")
 
 
 def get_motion_fields_settings(training_profile: str, torch_device: str) -> dict:
@@ -200,7 +226,211 @@ def dump_notebook(path: Path, notebook: dict) -> None:
         handle.write("\n")
 
 
+def set_kernel_metadata(notebook: dict, kernel_name: str, display_name: str) -> None:
+    if not kernel_name:
+        return
+
+    notebook.setdefault("metadata", {})["kernelspec"] = {
+        "display_name": display_name or kernel_name,
+        "language": "python",
+        "name": kernel_name,
+    }
+
+
+def clear_code_outputs(notebook: dict) -> None:
+    for cell in notebook.get("cells", []):
+        if cell.get("cell_type") != "code":
+            continue
+        cell["execution_count"] = None
+        cell["outputs"] = []
+        cell.get("metadata", {}).pop("execution", None)
+
+
+def ensure_working_directory(notebook: dict, working_directory: str) -> None:
+    if not working_directory:
+        return
+
+    marker = "ANIMATIONTECH_NOTEBOOK_CWD"
+    cells = notebook.setdefault("cells", [])
+    for cell in cells:
+        if cell.get("cell_type") != "code":
+            continue
+        if marker in "".join(cell.get("source", [])):
+            return
+
+    source = (
+        "import os\n"
+        f"ANIMATIONTECH_NOTEBOOK_CWD = {working_directory!r}\n"
+        "os.chdir(ANIMATIONTECH_NOTEBOOK_CWD)\n"
+    )
+    cwd_cell = {
+        "cell_type": "code",
+        "execution_count": None,
+        "id": "animationtech-cwd",
+        "metadata": {},
+        "outputs": [],
+        "source": source.splitlines(keepends=True),
+    }
+    cells.insert(1 if cells and cells[0].get("cell_type") == "markdown" else 0, cwd_cell)
+
+
+def patch_gamepad_access(source: str) -> tuple[str, bool]:
+    updated = GAMEPAD_AXIS_PATTERN.sub(
+        lambda match: f"animationtech_gamepad_axis(gamepad, {match.group(1)})",
+        source,
+    )
+    updated = GAMEPAD_BUTTON_PATTERN.sub(
+        lambda match: f"animationtech_gamepad_button(gamepad, {match.group(1)})",
+        updated,
+    )
+    return updated, updated != source
+
+
+def ensure_gamepad_helper(notebook: dict) -> None:
+    cells = notebook.setdefault("cells", [])
+    for cell in cells:
+        if cell.get("cell_type") != "code":
+            continue
+        if "def animationtech_gamepad_axis" in "".join(cell.get("source", [])):
+            return
+
+    helper_cell = {
+        "cell_type": "code",
+        "execution_count": None,
+        "id": "animationtech-gamepad",
+        "metadata": {},
+        "outputs": [],
+        "source": GAMEPAD_HELPER_SOURCE.splitlines(keepends=True),
+    }
+    cells.insert(1 if cells and cells[0].get("cell_type") == "markdown" else 0, helper_cell)
+
+
+NEAR_OPTIMAL_FINAL_INTERACT_SOURCE = """controller_position = np.array([0,0,0], dtype=np.float32)
+animationtech_last_frame = -1
+
+
+def animationtech_reset_near_optimal_player():
+    global player, controller_position, animationtech_last_frame
+    player = Player()
+    player.set_next_clip(0)
+    controller_position = np.array([0,0,0], dtype=np.float32)
+    animationtech_last_frame = -1
+
+
+def animationtech_controller_orient():
+    controller_orient = np.array([1,0,0,0], dtype=np.float32)
+    posx = gamepad.axes[0].value
+    posz = -gamepad.axes[1].value
+    if np.abs(posx) > 0.001 or np.abs(posz) > 0.001:
+        angle = np.atan2(posz, posx)
+        controller_orient[0] = np.cos(angle/2)
+        controller_orient[2] = np.sin(angle/2)
+    return controller_orient
+
+
+def animationtech_advance_near_optimal_frame(controller_orient):
+    global debug_struct, controller_position, player
+
+    if player.next_clip is None and clips_timings[player.current_clip.clip_id, 1] <= player.current_clip.frame:
+        f = clips_timings[player.current_clip.clip_id, 1]
+
+        q = lab.utils.quat_mul(lab.utils.quat_inv(controller_orient), player.current_clip.quaternions[f, 0, :])
+        theta =  np.atan2(
+            2 * q[0] * q[2],
+            1.0 - (2 * q[2] * q[2])
+        )
+
+        v = lab.utils.quat_mul_vec(controller_orient, np.array([1,0,0], dtype=np.float32))
+        x = np.dot(v, player.current_clip.positions[f, 0, :] - controller_position) * 0.01
+
+        next_clip_id, _ = optimal_policy(
+            coefficients_forward_0,
+            0.95,
+            player.current_clip.clip_id,
+            x,
+            theta,
+            physic_factor=.99, direction_factor=1.,
+        )
+        player.set_next_clip(next_clip_id)
+
+    player.tick()
+
+    v = lab.utils.quat_mul_vec(controller_orient, np.array([0,0,1], dtype=np.float32))
+    dist = np.dot(v, player.positions[0] - controller_position)
+    controller_position += v * dist
+    controller_position = (controller_position*.90 + player.positions[0]*.10)
+
+
+animationtech_reset_near_optimal_player()
+
+
+def render(frame, draw_debug=False):
+    global debug_struct, controller_position, player, animationtech_last_frame
+
+    target_frame = max(0, min(int(frame), MAX_STEP_LEN - 1))
+    controller_orient = animationtech_controller_orient()
+
+    if target_frame < animationtech_last_frame:
+        animationtech_reset_near_optimal_player()
+
+    while animationtech_last_frame < target_frame:
+        animationtech_advance_near_optimal_frame(controller_orient)
+        animationtech_last_frame += 1
+
+    q = player.quaternions
+    p = player.positions
+
+    a = lab.utils.quat_to_mat(q, p)
+    viewer.set_shadow_poi(p[0])
+
+    viewer.begin_shadow()
+    viewer.draw(character, a)
+    viewer.end_shadow()
+
+    viewer.begin_display()
+    viewer.draw_ground()
+    viewer.draw(character, a)
+    d = lab.utils.quat_to_mat(controller_orient, p[0])
+    viewer.draw(direction, d)
+
+    viewer.end_display()
+
+    viewer.disable(depth_test=True)
+
+    if draw_debug:
+        a = lab.utils.quat_to_mat(player.current_clip.quaternions[player.current_clip.frame], player.current_clip.positions[player.current_clip.frame])
+        viewer.draw_lines(character.world_skeleton_lines(a), np.array([1,0,0], dtype=np.float32))
+        viewer.draw_axis(character.world_skeleton_xforms(a))
+        if player.next_clip is not None:
+            f = max(player.next_clip.frame, 0)
+            a = lab.utils.quat_to_mat(player.next_clip.quaternions[f], player.next_clip.positions[f])
+            viewer.draw_lines(character.world_skeleton_lines(a), np.array([0,1,0], dtype=np.float32))
+
+    viewer.execute_commands()
+
+
+interact(
+    render,
+    frame=lab.Timeline(max=MAX_STEP_LEN-1)
+)
+viewer
+"""
+
+
+def transform_near_optimal_source(source: str) -> str:
+    if (
+        "controller_position = np.array([0,0,0], dtype=np.float32)" in source
+        and "def render(frame, draw_debug=False):" in source
+        and "optimal_policy(" in source
+    ):
+        return NEAR_OPTIMAL_FINAL_INTERACT_SOURCE
+    return source
+
+
 def transform_source(slug: str, source: str, enable_precompute: bool, training_profile: str, torch_device: str) -> str:
+    if slug == NEAR_OPTIMAL_SLUG:
+        return transform_near_optimal_source(source)
+
     if slug == MOTION_FIELDS_SLUG:
         settings = get_motion_fields_settings(training_profile, torch_device)
         artifact_name = get_profile_artifact_name(
@@ -292,6 +522,8 @@ def transform_source(slug: str, source: str, enable_precompute: bool, training_p
         ]
         for artifact_name in realtime_artifacts:
             updated = updated.replace(artifact_name, get_profile_artifact_name(artifact_name, training_profile))
+        if "interact(" in updated and "viewer" in updated:
+            return "print('AnimationTech automated run: skipped interactive UI cell.')\n"
         return updated
 
     if slug == KNOWING_FOOT_DOWN_SLUG:
@@ -311,14 +543,34 @@ def transform_source(slug: str, source: str, enable_precompute: bool, training_p
     return source
 
 
-def prepare_notebook(slug: str, notebook: dict, enable_precompute: bool, training_profile: str, torch_device: str) -> dict:
+def prepare_notebook(
+    slug: str,
+    notebook: dict,
+    enable_precompute: bool,
+    training_profile: str,
+    torch_device: str,
+    kernel_name: str = "",
+    display_name: str = "",
+    clear_outputs: bool = False,
+    working_directory: str = "",
+) -> dict:
+    needs_gamepad_helper = False
     for cell in notebook.get("cells", []):
         if cell.get("cell_type") != "code":
             continue
         source = "".join(cell.get("source", []))
         updated = transform_source(slug, source, enable_precompute, training_profile, torch_device)
+        updated, patched_gamepad = patch_gamepad_access(updated)
+        needs_gamepad_helper = needs_gamepad_helper or patched_gamepad
         if updated != source:
             cell["source"] = updated.splitlines(keepends=True)
+
+    ensure_working_directory(notebook, working_directory)
+    if needs_gamepad_helper:
+        ensure_gamepad_helper(notebook)
+    set_kernel_metadata(notebook, kernel_name, display_name)
+    if clear_outputs:
+        clear_code_outputs(notebook)
     return notebook
 
 
@@ -330,13 +582,27 @@ def main() -> int:
     parser.add_argument("--enable-precompute", action="store_true")
     parser.add_argument("--training-profile", choices=["validate", "adaptive", "quality"], default="validate")
     parser.add_argument("--torch-device", default="cpu")
+    parser.add_argument("--kernel-name", default="")
+    parser.add_argument("--display-name", default="")
+    parser.add_argument("--clear-outputs", action="store_true")
+    parser.add_argument("--working-directory", default="")
     args = parser.parse_args()
 
     input_path = Path(args.input_path)
     output_path = Path(args.output_path)
 
     notebook = load_notebook(input_path)
-    prepared = prepare_notebook(args.slug, notebook, args.enable_precompute, args.training_profile, args.torch_device)
+    prepared = prepare_notebook(
+        args.slug,
+        notebook,
+        args.enable_precompute,
+        args.training_profile,
+        args.torch_device,
+        args.kernel_name,
+        args.display_name,
+        args.clear_outputs,
+        args.working_directory,
+    )
     dump_notebook(output_path, prepared)
     print(output_path)
     return 0

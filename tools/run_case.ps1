@@ -20,13 +20,15 @@ $reportsRoot = Join-Path $repoRoot ".reports"
 $logsDir = Join-Path $reportsRoot "logs"
 $executedDir = Join-Path $reportsRoot "executed"
 $preparedDir = Join-Path $reportsRoot "prepared"
+$studyRoot = Join-Path $reportsRoot "study"
+$studyAnimationPapersDir = Join-Path $studyRoot "AnimationPapers"
 $locksDir = Join-Path $reportsRoot "locks"
 $statusDir = Join-Path $reportsRoot "status"
 $localJupyterRoot = Join-Path $repoRoot ".jupyter"
 $localJupyterConfig = Join-Path $localJupyterRoot "config"
 $localJupyterPath = Join-Path $localJupyterRoot "share\jupyter"
 
-New-Item -ItemType Directory -Force -Path $reportsRoot, $logsDir, $executedDir, $preparedDir, $locksDir, $statusDir, $localJupyterRoot, $localJupyterConfig, $localJupyterPath | Out-Null
+New-Item -ItemType Directory -Force -Path $reportsRoot, $logsDir, $executedDir, $preparedDir, $studyRoot, $locksDir, $statusDir, $localJupyterRoot, $localJupyterConfig, $localJupyterPath | Out-Null
 
 $env:JUPYTER_CONFIG_DIR = $localJupyterConfig
 $env:JUPYTER_DATA_DIR = $localJupyterRoot
@@ -377,24 +379,48 @@ function Test-ArtifactsExist($artifacts, [string]$sourceDir) {
     return $true
 }
 
-function Prepare-NotebookCopy([string]$envPrefix, [string]$entryPath, [string]$outputPath, [string]$ResolvedTrainingProfile, [string]$ResolvedTorchDevice, [switch]$EnablePrecompute) {
+function Prepare-NotebookCopy([string]$envPrefix, [string]$entryPath, [string]$outputPath, [string]$ResolvedTrainingProfile, [string]$ResolvedTorchDevice, [string]$KernelName, [string]$DisplayName, [switch]$EnablePrecompute, [switch]$ClearOutputs) {
     $pythonExe = Join-Path $envPrefix "python.exe"
+    $notebookWorkingDirectory = Split-Path -Parent $entryPath
     $args = @(
         $prepareNotebookPath,
         "--slug", $Slug,
         "--input", $entryPath,
         "--output", $outputPath,
         "--training-profile", $ResolvedTrainingProfile,
-        "--torch-device", $ResolvedTorchDevice
+        "--torch-device", $ResolvedTorchDevice,
+        "--kernel-name", $KernelName,
+        "--display-name", $DisplayName,
+        "--working-directory", $notebookWorkingDirectory
     )
     if ($EnablePrecompute) {
         $args += "--enable-precompute"
+    }
+    if ($ClearOutputs) {
+        $args += "--clear-outputs"
     }
 
     & $pythonExe @args
     if ($LASTEXITCODE -ne 0) {
         throw "Failed to prepare execution notebook for $Slug"
     }
+}
+
+function Copy-StudyNotebook([string]$entryPath, [string]$preparedPath) {
+    if (-not (Test-Path $preparedPath)) {
+        return
+    }
+
+    $animationPapersRoot = Join-Path $repoRoot "labs\AnimationPapers"
+    $resolvedEntry = (Resolve-Path -LiteralPath $entryPath).Path
+    $resolvedRoot = (Resolve-Path -LiteralPath $animationPapersRoot).Path
+    if (-not $resolvedEntry.StartsWith($resolvedRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
+        return
+    }
+
+    New-Item -ItemType Directory -Force -Path $studyAnimationPapersDir | Out-Null
+    $studyPath = Join-Path $studyAnimationPapersDir ([IO.Path]::GetFileName($entryPath))
+    Copy-Item -LiteralPath $preparedPath -Destination $studyPath -Force
 }
 
 function Ensure-HaloFaceAsset([string]$pythonExe, [string]$outputPath) {
@@ -497,7 +523,7 @@ try {
     $needsPrecompute = (([string]$Slug -eq "motion_fields_for_interactive_character_animation") -or ([string]$Slug -eq "real_time_planning_for_parameterized_human_motion")) -and ((-not $artifactsPresent) -or $profileSpecificTrainingRun)
 
     if ([string]$case.kind -eq "notebook") {
-        Prepare-NotebookCopy -envPrefix $envPrefix -entryPath $entryPath -outputPath $preparedPath -ResolvedTrainingProfile $resolvedResources.training_profile -ResolvedTorchDevice $resolvedResources.torch_device -EnablePrecompute:$needsPrecompute
+        Prepare-NotebookCopy -envPrefix $envPrefix -entryPath $entryPath -outputPath $preparedPath -ResolvedTrainingProfile $resolvedResources.training_profile -ResolvedTorchDevice $resolvedResources.torch_device -KernelName $case.kernel_name -DisplayName $displayName -EnablePrecompute:$needsPrecompute -ClearOutputs
 
         $nbconvertExe = Join-Path $envPrefix "Scripts\jupyter-nbconvert.exe"
         $nbArgs = @(
@@ -553,6 +579,10 @@ catch {
 if ($exitCode -ne 0) {
     Update-CaseStatus -status "failed" -note "Execution exited with code $exitCode. Check $logPath"
     exit $exitCode
+}
+
+if ([string]$case.kind -eq "notebook") {
+    Copy-StudyNotebook -entryPath $entryPath -preparedPath $preparedPath
 }
 
 $note = if ($validationMode -match "manual_smoke") {
